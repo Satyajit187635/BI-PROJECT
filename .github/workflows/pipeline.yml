@@ -26,7 +26,7 @@ jobs:
 
       - name: Run Databricks Job
         run: |
-          databricks jobs run-now --job-id 560003803469861
+          databricks jobs run-now 560003803469861
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
