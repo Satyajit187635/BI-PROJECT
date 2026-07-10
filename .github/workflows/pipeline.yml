@@ -1,6 +1,32 @@
-- name: Check Databricks user
-  run: |
-    databricks current-user me
-  env:
-    DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
-    DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+name: Run Databricks Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  run-databricks-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Databricks CLI
+        uses: databricks/setup-cli@main
+
+      - name: Check Databricks authentication
+        run: |
+          databricks current-user me
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+
+      - name: Run Databricks Job
+        run: |
+          databricks jobs run-now --job-id 560003803469861
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
