@@ -1,0 +1,16 @@
+name: Berlin Real Estate Pipeline
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Pipeline placeholder
+        run: |
+          echo "Pipeline triggered successfully."
