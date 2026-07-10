@@ -4,13 +4,23 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  run-pipeline:
+
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Pipeline placeholder
+      - name: Install Databricks CLI
         run: |
-          echo "Pipeline triggered successfully."
+          pip install databricks-cli
+
+      - name: Trigger Databricks Job
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+
+        run: |
+          databricks jobs run-now --job-id 560003803469861
