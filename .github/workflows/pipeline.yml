@@ -13,9 +13,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+
       - name: Install Databricks CLI
         run: |
-          pip install databricks-cli
+          curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
+
+
+      - name: Test Databricks connection
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+
+        run: |
+          databricks workspace list /
+
 
       - name: Trigger Databricks Job
         env:
